@@ -85,6 +85,7 @@ jobs:
     - cd bento/packer_templates/ubuntu
     - |-
       sed -i '/"type": "qemu"/a \ \ \ \ \ \ "display": "none",' ubuntu-18.04-amd64.json
+    - packer fix ubuntu-18.04-amd64.json
     - packer fix ubuntu-18.04-amd64.json > ubuntu.json
     - sudo -E su $USER -c 'PACKER_LOG=1 packer build -only=qemu ubuntu.json'
     - cd ../../builds
@@ -100,6 +101,7 @@ jobs:
     - cd bento/packer_templates/ubuntu
     - |-
       sed -i '/"type": "qemu"/a \ \ \ \ \ \ "display": "none",' ubuntu-20.04-amd64.json
+    - packer fix ubuntu-18.04-amd64.json
     - packer fix ubuntu-20.04-amd64.json > ubuntu.json
     - sudo -E su $USER -c 'PACKER_LOG=1 packer build -only=qemu ubuntu.json'
     - cd ../../builds
