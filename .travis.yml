@@ -29,7 +29,6 @@ before_script:
   # - cloud-localds seed.img init.yml
   - wget https://raw.githubusercontent.com/vagrant-libvirt/vagrant-libvirt/master/tools/create_box.sh
   - chmod 700 create_box.sh
-  - git clone https://github.com/chef/bento
 
 jobs:
   include:
