@@ -4,6 +4,9 @@ language: ruby
 
 addons:
   apt:
+    sources:
+    - sourceline: 'deb https://apt.releases.hashicorp.com bionic main'
+      key_url: 'https://apt.releases.hashicorp.com/gpg'
     update: true
     packages:
     - qemu-kvm
@@ -13,6 +16,7 @@ addons:
     - libvirt-dev
     - bridge-utils
     - cloud-utils
+    - packer
 
 install:
   - sudo usermod -aG kvm $USER
@@ -40,39 +44,39 @@ jobs:
   #   - wget https://cloud-images.ubuntu.com/releases/bionic/release-20200701/ubuntu-18.04-server-cloudimg-amd64-vagrant.box -O ubuntu.box
   #   - vagrant box add ubuntu.box --name ubuntu
   #   - vagrant init ubuntu
-  #   - vagrant up
+  #   - vagrant up --provider=libvirt --debug
   #   - vagrant ssh
 
-  - name: Ubuntu Bionic KVM Image
-    script:
-    - wget https://cloud-images.ubuntu.com/releases/bionic/release-20200701/ubuntu-18.04-server-cloudimg-amd64.img -O ubuntu.img
-    - qemu-img convert -O qcow2 ubuntu.img ubuntu.qcow2
-    - qemu-img resize ubuntu.qcow2 +50G
-    - ./create_box.sh ubuntu.qcow2 ubuntu.box
-    - vagrant box add ubuntu.box --name ubuntu
-    - vagrant init ubuntu
-    - sudo -E su $USER -c 'vagrant up'
-    - sudo -E su $USER -c 'vagrant ssh'
+  # - name: Ubuntu Bionic KVM Image
+  #   script:
+  #   - wget https://cloud-images.ubuntu.com/releases/bionic/release-20200701/ubuntu-18.04-server-cloudimg-amd64.img -O ubuntu.img
+  #   - qemu-img convert -O qcow2 ubuntu.img ubuntu.qcow2
+  #   - qemu-img resize ubuntu.qcow2 +50G
+  #   - ./create_box.sh ubuntu.qcow2 ubuntu.box
+  #   - vagrant box add ubuntu.box --name ubuntu
+  #   - vagrant init ubuntu
+  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
+  #   - sudo -E su $USER -c 'vagrant ssh'
 
-  - name: Ubuntu Focal KVM Disk Image
-    script:
-    - wget https://cloud-images.ubuntu.com/releases/focal/release-20200701/ubuntu-20.04-server-cloudimg-amd64-disk-kvm.img -O ubuntu.img
-    - qemu-img convert -O qcow2 ubuntu.img ubuntu.qcow2
-    - qemu-img resize ubuntu.qcow2 +50G
-    - ./create_box.sh ubuntu.qcow2 ubuntu.box
-    - vagrant box add ubuntu.box --name ubuntu
-    - vagrant init ubuntu
-    - sudo -E su $USER -c 'vagrant up'
-    - sudo -E su $USER -c 'vagrant ssh'
+  # - name: Ubuntu Focal KVM Disk Image
+  #   script:
+  #   - wget https://cloud-images.ubuntu.com/releases/focal/release-20200701/ubuntu-20.04-server-cloudimg-amd64-disk-kvm.img -O ubuntu.img
+  #   - qemu-img convert -O qcow2 ubuntu.img ubuntu.qcow2
+  #   - qemu-img resize ubuntu.qcow2 +50G
+  #   - ./create_box.sh ubuntu.qcow2 ubuntu.box
+  #   - vagrant box add ubuntu.box --name ubuntu
+  #   - vagrant init ubuntu
+  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
+  #   - sudo -E su $USER -c 'vagrant ssh'
 
-  - name: Ubuntu Focal KVM Image
-    script:
-    - wget https://cloud-images.ubuntu.com/releases/focal/release-20200701/ubuntu-20.04-server-cloudimg-amd64.img -O ubuntu.img
-    - qemu-img convert -O qcow2 ubuntu.img ubuntu.qcow2
-    - qemu-img resize ubuntu.qcow2 +50G
-    - ./create_box.sh ubuntu.qcow2 ubuntu.box
-    - vagrant box add ubuntu.box --name ubuntu
-    - vagrant init ubuntu
-    - sudo -E su $USER -c 'vagrant up'
-    - sudo -E su $USER -c 'vagrant ssh'
+  # - name: Ubuntu Focal KVM Image
+  #   script:
+  #   - wget https://cloud-images.ubuntu.com/releases/focal/release-20200701/ubuntu-20.04-server-cloudimg-amd64.img -O ubuntu.img
+  #   - qemu-img convert -O qcow2 ubuntu.img ubuntu.qcow2
+  #   - qemu-img resize ubuntu.qcow2 +50G
+  #   - ./create_box.sh ubuntu.qcow2 ubuntu.box
+  #   - vagrant box add ubuntu.box --name ubuntu
+  #   - vagrant init ubuntu
+  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
+  #   - sudo -E su $USER -c 'vagrant ssh'
 
