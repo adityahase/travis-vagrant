@@ -29,6 +29,7 @@ before_script:
   # - cloud-localds seed.img init.yml
   - wget https://raw.githubusercontent.com/vagrant-libvirt/vagrant-libvirt/master/tools/create_box.sh
   - chmod 700 create_box.sh
+  - git clone https://github.com/chef/bento
 
 jobs:
   include:
@@ -79,4 +80,28 @@ jobs:
   #   - vagrant init ubuntu
   #   - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
   #   - sudo -E su $USER -c 'vagrant ssh'
+  - name: Packer Bionic Build
+    script:
+    - git clone https://github.com/chef/bento
+    - cd bento/packer_templates/ubuntu
+    - packer build -only=qemu ubuntu-18.04-amd64.json
+    - cd ../../builds
+    - ls -R
+    - vagrant box add ubuntu-18.04.qemu.box --name ubuntu
+    - vagrant init ubuntu
+    - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
+    - sudo -E su $USER -c 'vagrant ssh'
+
+  - name: Packer Focal Build
+    script:
+    - git clone https://github.com/chef/bento
+    - cd bento/packer_templates/ubuntu
+    - packer build -only=qemu ubuntu-20.04-amd64.json
+    - cd ../../builds
+    - ls -R
+    - vagrant box add ubuntu-20.04.qemu.box --name ubuntu
+    - vagrant init ubuntu
+    - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
+    - sudo -E su $USER -c 'vagrant ssh'
+
 
