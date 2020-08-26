@@ -87,7 +87,7 @@ jobs:
     - sudo -E su $USER -c 'PACKER_LOG=1 packer build -only=qemu ubuntu-18.04-amd64.json'
     - cd ../../builds
     - ls -R
-    - vagrant box add ubuntu-18.04.qemu.box --name ubuntu
+    - vagrant box add ubuntu-18.04.libvirt.box --name ubuntu
     - vagrant init ubuntu
     - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
     - sudo -E su $USER -c 'vagrant ssh'
@@ -100,7 +100,7 @@ jobs:
     - sudo -E su $USER -c 'PACKER_LOG=1 packer build -only=qemu ubuntu-20.04-amd64.json'
     - cd ../../builds
     - ls -R
-    - vagrant box add ubuntu-20.04.qemu.box --name ubuntu
+    - vagrant box add ubuntu-20.04.libvirt.box --name ubuntu
     - vagrant init ubuntu
     - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
     - sudo -E su $USER -c 'vagrant ssh'
