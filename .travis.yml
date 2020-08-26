@@ -84,7 +84,7 @@ jobs:
     - git clone https://github.com/chef/bento
     - cd bento/packer_templates/ubuntu
     - sed -i '/"type": "qemu"/a \ \ \ \ \ \ "display": "none",' ubuntu-18.04-amd64.json
-    - packer build -only=qemu ubuntu-18.04-amd64.json
+    - sudo -E su $USER -c 'PACKER_LOG=1 packer build -only=qemu ubuntu-18.04-amd64.json'
     - cd ../../builds
     - ls -R
     - vagrant box add ubuntu-18.04.qemu.box --name ubuntu
@@ -97,7 +97,7 @@ jobs:
     - git clone https://github.com/chef/bento
     - cd bento/packer_templates/ubuntu
     - sed -i '/"type": "qemu"/a \ \ \ \ \ \ "display": "none",' ubuntu-20.04-amd64.json
-    - packer build -only=qemu ubuntu-20.04-amd64.json
+    - sudo -E su $USER -c 'PACKER_LOG=1 packer build -only=qemu ubuntu-20.04-amd64.json'
     - cd ../../builds
     - ls -R
     - vagrant box add ubuntu-20.04.qemu.box --name ubuntu
