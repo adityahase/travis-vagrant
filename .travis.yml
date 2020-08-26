@@ -19,6 +19,8 @@ addons:
     - packer
 
 install:
+  - packer -v
+  - which packer
   - sudo usermod -aG kvm $USER
   - sudo usermod -aG libvirt $USER
   # - wget https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.10_x86_64.deb
