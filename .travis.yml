@@ -45,7 +45,7 @@ jobs:
   #   - wget https://cloud-images.ubuntu.com/releases/bionic/release-20200701/ubuntu-18.04-server-cloudimg-amd64-vagrant.box -O ubuntu.box
   #   - vagrant box add ubuntu.box --name ubuntu
   #   - vagrant init ubuntu
-  #   - vagrant up --provider=libvirt --debug
+  #   - vagrant up --provider=libvirt
   #   - vagrant ssh
 
   # - name: Ubuntu Bionic KVM Image
@@ -56,7 +56,7 @@ jobs:
   #   - ./create_box.sh ubuntu.qcow2 ubuntu.box
   #   - vagrant box add ubuntu.box --name ubuntu
   #   - vagrant init ubuntu
-  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
+  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt'
   #   - sudo -E su $USER -c 'vagrant ssh'
 
   # - name: Ubuntu Focal KVM Disk Image
@@ -67,7 +67,7 @@ jobs:
   #   - ./create_box.sh ubuntu.qcow2 ubuntu.box
   #   - vagrant box add ubuntu.box --name ubuntu
   #   - vagrant init ubuntu
-  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
+  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt'
   #   - sudo -E su $USER -c 'vagrant ssh'
 
   # - name: Ubuntu Focal KVM Image
@@ -78,7 +78,7 @@ jobs:
   #   - ./create_box.sh ubuntu.qcow2 ubuntu.box
   #   - vagrant box add ubuntu.box --name ubuntu
   #   - vagrant init ubuntu
-  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
+  #   - sudo -E su $USER -c 'vagrant up --provider=libvirt'
   #   - sudo -E su $USER -c 'vagrant ssh'
   - name: Packer Bionic Build
     script:
@@ -86,13 +86,12 @@ jobs:
     - cd bento/packer_templates/ubuntu
     - |-
       sed -i '/"type": "qemu"/a \ \ \ \ \ \ "display": "none",' ubuntu-18.04-amd64.json
-    - sudo -E su $USER -c 'PACKER_LOG=1 packer build -only=qemu ubuntu-18.04-amd64.json'
+    - travis_wait sudo -E su $USER -c 'packer build -only=qemu ubuntu-18.04-amd64.json'
     - cd ../../builds
-    - ls -R
     - vagrant box add ubuntu-18.04.libvirt.box --name ubuntu
     - vagrant init ubuntu
-    - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
-    - sudo -E su $USER -c 'vagrant ssh'
+    - sudo -E su $USER -c 'vagrant up --provider=libvirt'
+    - sudo -E su $USER -c 'vagrant ssh -c "echo Hello, World"'
 
   - name: Packer Focal Build
     script:
@@ -100,12 +99,11 @@ jobs:
     - cd bento/packer_templates/ubuntu
     - |-
       sed -i '/"type": "qemu"/a \ \ \ \ \ \ "display": "none",' ubuntu-20.04-amd64.json
-    - sudo -E su $USER -c 'PACKER_LOG=1 packer build -only=qemu ubuntu-20.04-amd64.json'
+    - travis_wait sudo -E su $USER -c 'packer build -only=qemu ubuntu-20.04-amd64.json'
     - cd ../../builds
-    - ls -R
     - vagrant box add ubuntu-20.04.libvirt.box --name ubuntu
     - vagrant init ubuntu
-    - sudo -E su $USER -c 'vagrant up --provider=libvirt --debug'
-    - sudo -E su $USER -c 'vagrant ssh'
+    - sudo -E su $USER -c 'vagrant up --provider=libvirt'
+    - sudo -E su $USER -c 'vagrant ssh -c "echo Hello, World"'
 
 
